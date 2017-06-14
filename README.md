@@ -1,24 +1,7 @@
-# README
+# Rails/React Token Auth Test
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- Rails token setup: Followed [this tutorial](https://github.com/bparanj/tokie), with [these modifications](https://github.com/bparanj/tokie/issues/3)
+- React token auth setup: Used Auth module from [this tutorial](https://vladimirponomarev.com/blog/authentication-in-react-apps-jwt)
 
-Things you may want to cover:
+This setup uses bcrypt and the Rails 5 `has_secure_token` method.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

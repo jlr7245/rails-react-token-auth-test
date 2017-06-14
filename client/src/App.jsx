@@ -13,6 +13,7 @@ class App extends Component {
     
     this.loginSubmit = this.loginSubmit.bind(this);
     this.deleteToken = this.deleteToken.bind(this);
+    this.makeApiCall = this.makeApiCall.bind(this);
   }
 
   loginSubmit(e) {
@@ -43,6 +44,14 @@ class App extends Component {
     });
   }
 
+  makeApiCall() {
+    fetch('/hacker_spots/index', {
+      headers: {
+        'Authorization': `Token token=${Auth.getToken()}`,
+      }
+    }).then(res => res.json()).then(jsonRes => console.log(jsonRes));
+  }
+
 
   render() {
     return (
@@ -51,6 +60,7 @@ class App extends Component {
           ? <p>Logged in!</p>
           : <LoginForm loginSubmit={this.loginSubmit} />}
         <span className="logout" onClick={() => this.deleteToken()}>Log Out</span>
+        <span className="api" onClick={() => this.makeApiCall()}>Make API call</span>
       </div>
     );
   }
