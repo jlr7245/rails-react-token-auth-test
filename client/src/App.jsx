@@ -8,10 +8,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      auth: false,
+      auth: Auth.isUserAuthenticated(),
     }
     
     this.loginSubmit = this.loginSubmit.bind(this);
+    this.deleteToken = this.deleteToken.bind(this);
   }
 
   loginSubmit(e) {
@@ -26,13 +27,21 @@ class App extends Component {
         password: e.target.password.value,
       }),
     }).then(res => res.json()).then((jsonRes) => {
-      Auth.authenticateToken(jsonRes.token);
+      if (jsonRes.token !== undefined) {
+        Auth.authenticateToken(jsonRes.token);
+      }
       this.setState({
         auth: Auth.isUserAuthenticated(),
       });
     }).catch(err => console.log(err));
   }
 
+  deleteToken() {
+    Auth.deauthenticateUser();
+    this.setState({
+      auth: Auth.isUserAuthenticated(),
+    });
+  }
 
 
   render() {
@@ -41,6 +50,7 @@ class App extends Component {
         {(this.state.auth) 
           ? <p>Logged in!</p>
           : <LoginForm loginSubmit={this.loginSubmit} />}
+        <span className="logout" onClick={() => this.deleteToken()}>Log Out</span>
       </div>
     );
   }
