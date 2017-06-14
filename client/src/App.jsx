@@ -1,18 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Auth from './modules/Auth';
+import LoginForm from './components/LoginForm';
+
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      auth: false,
+    }
+    
+    this.loginSubmit = this.loginSubmit.bind(this);
+  }
+
+  loginSubmit(e) {
+    e.preventDefault();
+    fetch('/login.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }),
+    }).then(res => res.json()).then((jsonRes) => {
+      Auth.authenticateToken(jsonRes.token);
+      this.setState({
+        auth: isUserAuthenticated(),
+      });
+    }).catch(err => console.log(err));
+  }
+
+
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {(this.state.auth) 
+          ? <p>Logged in!</p>
+          : <LoginForm loginSubmit={this.loginSubmit} />}
       </div>
     );
   }
