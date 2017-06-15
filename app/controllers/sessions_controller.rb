@@ -11,7 +11,8 @@ class SessionsController < ApiController
   
   def destroy
     logout
-    head :ok
+    # head :ok
+    render json: { message: "logged out"}
   end
   
   private
