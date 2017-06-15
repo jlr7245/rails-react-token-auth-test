@@ -7,6 +7,7 @@ class Dash extends Component {
   }
 
   componentDidMount() {
+    // TODO: fetch on something other than the auth token in the URL
     fetch(`/users/${Auth.getToken()}`, {
       headers: {
         'Content-Type': 'application/json',

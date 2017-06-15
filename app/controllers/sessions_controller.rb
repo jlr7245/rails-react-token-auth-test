@@ -1,6 +1,7 @@
 class SessionsController < ApiController
   skip_before_action :require_login, only: [:create], raise: false
   def create
+    # TODO: fix user table so no duplicate emails on registration
     if user = User.valid_login?(params[:email], params[:password])
       allow_token_to_be_used_only_once_for(user)
       send_auth_token_for_valid_login_of(user)
@@ -11,7 +12,6 @@ class SessionsController < ApiController
   
   def destroy
     logout
-    # head :ok
     render json: { message: "logged out"}
   end
   
