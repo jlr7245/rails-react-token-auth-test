@@ -23,7 +23,7 @@ class App extends Component {
   //============= AUTH METHODS
   loginSubmit(e) {
     e.preventDefault();
-    fetch('/login.json', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ class App extends Component {
   }
 
   logOut() {
-    fetch('/logout.json', {
+    fetch('/logout', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ class App extends Component {
 
   // make a simple api call to the backend
   makeApiCall() {
-    fetch('/hacker_spots/index', {
+    fetch('/test', {
       headers: {
         'Authorization': `Token token=${Auth.getToken()}`,
       }
