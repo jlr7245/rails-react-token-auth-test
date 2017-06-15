@@ -4,6 +4,7 @@ import './App.css';
 import Auth from './modules/Auth';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import Dash from './components/Dash';
 
 class App extends Component {
   constructor() {
@@ -127,10 +128,8 @@ class App extends Component {
     return (
       <div className="App">
         {(this.state.auth) 
-          ? <p>Logged in!</p>
+          ? <Dash logOut={this.logOut} makeApiCall={this.makeApiCall} />
           : this.renderForm()}
-        <span className="logout" onClick={() => this.logOut()}>Log Out</span>
-        <span className="api" onClick={() => this.makeApiCall()}>Make API call</span>
       </div>
     );
   }

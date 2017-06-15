@@ -1,5 +1,5 @@
 class UsersController < ApiController
-  # skip_before_action :require_login, only: [:create]
+  before_action :require_login, except: [:create]
 
   def create
     begin
@@ -10,6 +10,18 @@ class UsersController < ApiController
       puts "oh shit"
     end
   end
+
+  def show
+    begin
+      @user = User.find_by_auth_token(params[:id])
+      render json: { user: { name: @user.name, email: @user.email } }
+    rescue Exception
+      puts Exception
+    ensure
+      
+    end
+  end
+  
   
   private
   def user_params
