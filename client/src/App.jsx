@@ -44,7 +44,26 @@ class App extends Component {
 
   registerSubmit(e) {
     e.preventDefault();
-
+    fetch('/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: {
+          name: e.target.name.value,
+          email: e.target.email.value,
+          password: e.target.password.value,
+        },
+      }),
+    }).then(res => res.json()).then(jsonRes => {
+      if (jsonRes.token !== undefined) {
+        Auth.authenticateToken(jsonRes.token);
+      }
+      this.setState({
+        auth: Auth.isUserAuthenticated(),
+      });
+    }).catch(err => console.log(err));
   }
 
   logOut() {
