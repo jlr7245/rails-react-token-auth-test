@@ -2,23 +2,21 @@ class UsersController < ApiController
   before_action :require_login, except: [:create]
 
   def create
-    begin
-      @user = User.new(user_params)
-      @user.save
-      render json: { token: @user.auth_token }
+      user = User.create!(user_params)
+      render json: { token: user.auth_token }
     # TODO: error handling
     rescue Exception
+      # TODO: better_errors gem
       puts "oh shit"
-    end
   end
 
-  def show
+  def index
     begin
-      # request is made to `/user/AUTH_TOKEN`
+      # request is made to `/user`
       # TODO: fix that
-      @user = User.find_by_auth_token(params[:id])
+      user = User.find_by_auth_token!(request.headers[:token])
       # don't want to send back the whole user
-      render json: { user: { name: @user.name, email: @user.email } }
+      render json: { user: { name: user.name, email: user.email } }
     # TODO: error handling
     rescue Exception
       puts Exception

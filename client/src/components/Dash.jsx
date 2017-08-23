@@ -8,10 +8,11 @@ class Dash extends Component {
 
   componentDidMount() {
     // TODO: fetch on something other than the auth token in the URL
-    fetch(`/users/${Auth.getToken()}`, {
+    fetch(`/users`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token token=${Auth.getToken()}`
+        'Authorization': `Token token=${Auth.getToken()}`,
+        token: Auth.getToken(),
       }
     }).then(res => res.json()).then((jsonRes) => {
       console.log(jsonRes);
